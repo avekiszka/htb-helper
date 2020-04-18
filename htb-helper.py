@@ -30,6 +30,12 @@ def run_smbclient(smbclient_address):
     print("#" * 10, "SMBCLIENT STOP", "#" * 10, sep="")
 
 
+def run_enum4linux(enum4linux_address):
+    print("#" * 10, "ENUM4LINUX START", "#" * 10, sep="")
+    process = subprocess.Popen(['enum4linux', enum4linux_address], stdout=subprocess.PIPE, universal_newlines=True)
+    read_subproc_line(process)
+    print("#" * 10, "ENUM4LINUX STOP", "#" * 10, sep="")
+
 def skaner(adres_do_przeskanowania):
     print("#" * 10, "NMAP SCAN START", "#" * 10, sep="")
     # wczytanie nmapa do pamieci
