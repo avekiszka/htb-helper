@@ -113,9 +113,12 @@ def main(argv):
             adres = arg
             run_ping(adres)
             skaner(adres)
-            serwisy(adres)
+            serwisy(adres, "active")
         elif opt == '-p':
-            print("Pokaze Ci jakie programy uruchomic w zaleznosci od otwartych portow")
+            adres = arg
+            run_ping(adres)
+            skaner(adres)
+            serwisy(adres, "passive")
 
 
 if __name__ == "__main__":
