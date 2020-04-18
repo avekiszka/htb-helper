@@ -17,7 +17,6 @@ def skaner(adres):
             print('-'*10)
             print('Protocol : %s' % proto)
             lport = nm[host][proto].keys()
-            lport.sort()
             for port in lport:
                 print('port : %s\tstate : %s' % (port, nm[host][proto][port]['state']))
 
