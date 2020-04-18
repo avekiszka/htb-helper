@@ -62,6 +62,8 @@ def serwisy(adress_hosta):
     if nm[adress_hosta].has_tcp(445):
         print("Port SMB otwarty, uruchamiam program SMBCLIENT")
         run_smbclient(adress_hosta)
+        print("Port SMB otwarty, uruchamiam program ENUM4LINUX")
+        run_enum4linux(adress_hosta)
 
 
 def main(argv):
