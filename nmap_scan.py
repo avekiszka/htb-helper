@@ -8,6 +8,7 @@ def skaner(adres):
     global nm
     nm = nmap.PortScanner()
     #start scanu
+    print("Uruchamiam NMAP skan")
     nm.scan(adres)
     #wyswietlenie rezultatu
     for host in nm.all_hosts():
@@ -38,8 +39,8 @@ def main(argv):
             print('nmap_scan.py -i <ip address>')
             sys.exit(0)
         elif opt in "-i":
-            adress = arg
-            skaner(adress)
+            skaner(arg)
+            serwisy(arg)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
