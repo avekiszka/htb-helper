@@ -17,20 +17,21 @@ def read_subproc_line(proc):
 
 
 def run_ping(ping_address):
-    print("#"*10,"PING CHECK","#"*10,sep="")
+    print("#"*10,"PING CHECK START","#"*10,sep="")
     process = subprocess.Popen(['ping', '-c 4', ping_address],stdout=subprocess.PIPE,universal_newlines=True)
     read_subproc_line(process)
-    print("#" * 10, "PING CHECK", "#" * 10, sep="")
+    print("#" * 10, "PING CHECK STOP", "#" * 10, sep="")
 
 
 def run_smbclient(smbclient_address):
-    print("#" * 10, "SMBCLIENT", "#" * 10, sep="")
+    print("#" * 10, "SMBCLIENT START", "#" * 10, sep="")
     process = subprocess.Popen(['smbclient', '-N', '-L', '\\\\\\\\%s\\\\' % smbclient_address],stdout=subprocess.PIPE,universal_newlines=True)
     read_subproc_line(process)
-    print("#" * 10, "SMBCLIENT", "#" * 10, sep="")
+    print("#" * 10, "SMBCLIENT STOP", "#" * 10, sep="")
 
 
 def skaner(adres_do_przeskanowania):
+    print("#" * 10, "NMAP SCAN START", "#" * 10, sep="")
     # wczytanie nmapa do pamieci
     global nm
     nm = nmap.PortScanner()
@@ -48,6 +49,7 @@ def skaner(adres_do_przeskanowania):
             lport = nm[host][proto].keys()
             for port in lport:
                 print('port : %s\tstate : %s' % (port, nm[host][proto][port]['state']))
+    print("#" * 10, "NMAP SCAN STOP", "#" * 10, sep="")
 
 
 def serwisy(adress_hosta):
