@@ -52,9 +52,9 @@ def main(argv):
             print('nmap_scan.py -i <ip address>')
             sys.exit(0)
         elif opt in "-i":
+            run_ping(arg)
             skaner(arg)
             serwisy(arg)
-            run_ping(arg)
 
 
 if __name__ == "__main__":
