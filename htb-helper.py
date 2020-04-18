@@ -68,19 +68,34 @@ def serwisy(adress_hosta):
 
 def main(argv):
     try:
-        opts, args = getopt.getopt(argv, "hi:")
+        opts, args = getopt.getopt(argv, "ha:p:")
     except getopt.GetoptError:
         print('nmap_scan.py -i <ip address>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('nmap_scan.py -i <ip address>')
+            print("""This script is desinged to help you with recon and enum phase while doing HTB boxes.
+            Usage:
+            python3 htb-helper.py [options] <ip-address>
+            
+            Options:
+            -h      Displays this help message
+            -a      Active mode. Runs commands for you, all you need to do is analyze the output.
+            -p      Passive mode. Shows you what command you can run, depending on the open port on the device.
+            
+            Example Usage:
+            python3 htb-helper.py -p 10.10.10.178
+            
+            @avekiszka            
+            """)
             sys.exit(0)
-        elif opt in "-i":
+        elif opt == "-a":
             adres = arg
             run_ping(adres)
             skaner(adres)
             serwisy(adres)
+        elif opt == '-p':
+            print("Pokaze Ci jakie programy uruchomic w zaleznosci od otwartych portow")
 
 
 if __name__ == "__main__":
