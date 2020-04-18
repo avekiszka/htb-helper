@@ -33,9 +33,8 @@ def main(argv):
             print('nmap_scan.py -i <ip address>')
             sys.exit(0)
         elif opt in "-i":
-            adres = arg
-            return adres
+            adress = arg
+            skaner(adress)
 
 if __name__ == "__main__":
     main(sys.argv[1:])
-    skaner(adres)
