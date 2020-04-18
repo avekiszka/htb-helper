@@ -92,6 +92,7 @@ def serwisy(adress_hosta, mode):
             print("Port LDAP otwarty, uruchamiamy program XXX")
         if mode == "passive":
             print("Port LDAP otwarty, możesz uruchomić poniższe programy:")
+            print("nmap --script vuln -p 389 -v %s " % adress_hosta)
             print("Pozyskujemy DN poniższmy poleceniem")
             print("ldapsearch -h %s -x -s base namingcontext" % adress_hosta)
             print("Pozyskane DN wykorzystujemy poniżej. Przykładowe DN 'DC=htb,DC=local'")
