@@ -16,27 +16,27 @@ def read_subproc_line(proc):
             break
 
 
-def run_ping(adress):
+def run_ping(ping_address):
     print("#"*10,"PING CHECK","#"*10,sep="")
-    process = subprocess.Popen(['ping', '-c 4', adress],stdout=subprocess.PIPE,universal_newlines=True)
+    process = subprocess.Popen(['ping', '-c 4', ping_address],stdout=subprocess.PIPE,universal_newlines=True)
     read_subproc_line(process)
     print("#" * 10, "PING CHECK", "#" * 10, sep="")
 
 
-def run_smbclient(adress):
+def run_smbclient(smbclient_address):
     print("#" * 10, "SMBCLIENT", "#" * 10, sep="")
-    process = subprocess.Popen(['smbclient', '-N', '-L', '\\\\\\\\%s\\\\' % adress],stdout=subprocess.PIPE,universal_newlines=True)
+    process = subprocess.Popen(['smbclient', '-N', '-L', '\\\\\\\\%s\\\\' % smbclient_address],stdout=subprocess.PIPE,universal_newlines=True)
     read_subproc_line(process)
     print("#" * 10, "SMBCLIENT", "#" * 10, sep="")
 
 
-def skaner(adres):
+def skaner(adres_do_przeskanowania):
     # wczytanie nmapa do pamieci
     global nm
     nm = nmap.PortScanner()
     # start scanu
     print("Uruchamiam NMAP skan")
-    nm.scan(adres)
+    nm.scan(adres_do_przeskanowania)
     # wyswietlenie rezultatu
     for host in nm.all_hosts():
         print('-'*40)
@@ -50,10 +50,10 @@ def skaner(adres):
                 print('port : %s\tstate : %s' % (port, nm[host][proto][port]['state']))
 
 
-def serwisy(adress):
-    if nm[adress].has_tcp(445):
+def serwisy(adress_hosta):
+    if nm[adress_hosta].has_tcp(445):
         print("Port SMB otwarty, uruchamiam program SMBCLIENT")
-        run_smbclient(adress)
+        run_smbclient(adress_hosta)
 
 
 def main(argv):
@@ -67,9 +67,10 @@ def main(argv):
             print('nmap_scan.py -i <ip address>')
             sys.exit(0)
         elif opt in "-i":
-            run_ping(arg)
-            skaner(arg)
-            serwisy(arg)
+            adres = arg
+            run_ping(adres)
+            skaner(adres)
+            serwisy(adres)
 
 
 if __name__ == "__main__":
