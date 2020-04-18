@@ -54,6 +54,7 @@ def main(argv):
         elif opt in "-i":
             skaner(arg)
             serwisy(arg)
+            run_ping(arg)
 
 
 if __name__ == "__main__":
