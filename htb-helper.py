@@ -67,6 +67,7 @@ def serwisy(adress_hosta, mode):
             run_enum4linux(adress_hosta)
         elif mode == "passive":
             print("Port SMB otwarty, możesz uruchomić poniższe programy:")
+            print("nmap --script vuln -p 445 -v %s" % adress_hosta)
             print("smbclinet -N -L \\\\\\\\%s\\\\" % adress_hosta)
             print("enum4linux %s" % adress_hosta)
     if nm[adress_hosta].has_tcp(80):
@@ -74,17 +75,27 @@ def serwisy(adress_hosta, mode):
             print("Port HTTP otwarty, uruchamiam program XXX")
         if mode == "passive":
             print("Port HTTP otwarty, możesz uruchomić poniższe programy:")
+            print("nmap --script vuln -p 80 -v %s" % adress_hosta)
             print("Wyszkiwanie plikow i katalogow na serwerze www:\n","python3 /opt/dirsearch/dirsearch.py -u http://%s/ -f -e html,php,txt,xml -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt",sep="" % adress_hosta)
             print("wfuzz -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://%s/FUZZ.php" % adress_hosta)
             print("Analiza webserwera:")
             print("nikto -host http://%s/" % adress_hosta)
     if nm[adress_hosta].has_tcp(135):
         if mode == "active":
-            print("Port RPC otwarty, uruchamiami program XXX")
+            print("Port RPC otwarty, uruchamiamy program XXX")
         if mode == "passive":
             print("Port RPC otwarty, możesz uruchomić poniższe proogramy:")
+            print("nmap --script vuln -p 135 -v %s" % adress_hosta)
             print("rpcclient -U \"\" -N %s" % adress_hosta)
-
+    if nm[adress_hosta].has_tcp(389):
+        if mode == "active":
+            print("Port LDAP otwarty, uruchamiamy program XXX")
+        if mode == "passive":
+            print("Port LDAP otwarty, możesz uruchomić poniższe programy:")
+            print("Pozyskujemy DN poniższmy poleceniem")
+            print("ldapsearch -h %s -x -s base namingcontext" % adress_hosta)
+            print("Pozyskane DN wykorzystujemy poniżej. Przykładowe DN 'DC=htb,DC=local'")
+            print("ldapsearch -h %s -x -b \"DC=htb,DC=local\"" % adress_hosta)
 
 def main(argv):
     try:
@@ -94,7 +105,8 @@ def main(argv):
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print("""This script is desinged to help you with recon and enum phase while doing HTB boxes.
+            print("""\nThis script is designed to help you with recon and enum phase while doing HTB boxes.
+            
             Usage:
             python3 htb-helper.py [options] <ip-address>
             
