@@ -34,7 +34,8 @@ def main(argv):
             sys.exit(0)
         elif opt in "-i":
             adres = arg
-    skaner(adres)
+            return adres
 
 if __name__ == "__main__":
     main(sys.argv[1:])
+    skaner(adres)
