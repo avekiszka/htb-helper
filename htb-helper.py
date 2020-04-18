@@ -66,7 +66,8 @@ def serwisy(adress_hosta, mode):
             print("Port SMB otwarty, uruchamiam program ENUM4LINUX")
             run_enum4linux(adress_hosta)
         elif mode == "passive":
-            print("\nPort SMB otwarty, możesz uruchomić poniższe programy:\n")
+            print("-" * 40)
+            print("Port SMB otwarty, możesz uruchomić poniższe programy:\n")
             print("nmap --script vuln -p 445 -v %s" % adress_hosta)
             print("smbclient -N -L \\\\\\\\%s\\\\" % adress_hosta)
             print("enum4linux %s" % adress_hosta)
@@ -74,28 +75,31 @@ def serwisy(adress_hosta, mode):
         if mode == "active":
             print("Port HTTP otwarty, uruchamiam program XXX")
         if mode == "passive":
-            print("\nPort HTTP otwarty, możesz uruchomić poniższe programy:\n")
+            print("-" * 40)
+            print("###Port HTTP otwarty, możesz uruchomić poniższe programy:###\n")
             print("nmap --script vuln -p 80 -v %s" % adress_hosta)
-            print("Wyszkiwanie plikow i katalogow na serwerze www:\n","python3 /opt/dirsearch/dirsearch.py -u http://%s/ -f -e html,php,txt,xml -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt",sep="" % adress_hosta)
+            print("###Wyszkiwanie plikow i katalogow na serwerze www:###\n","python3 /opt/dirsearch/dirsearch.py -u http://%s/ -f -e html,php,txt,xml -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt",sep="" % adress_hosta)
             print("wfuzz -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://%s/FUZZ.php" % adress_hosta)
-            print("Analiza webserwera:")
+            print("\n###Analiza webserwera:###\n")
             print("nikto -host http://%s/" % adress_hosta)
     if nm[adress_hosta].has_tcp(135):
         if mode == "active":
             print("Port RPC otwarty, uruchamiamy program XXX")
         if mode == "passive":
-            print("\nPort RPC otwarty, możesz uruchomić poniższe programy:\n")
+            print("-" * 40)
+            print("###Port RPC otwarty, możesz uruchomić poniższe programy:###\n")
             print("nmap --script vuln -p 135 -v %s" % adress_hosta)
             print("rpcclient -U \"\" -N %s" % adress_hosta)
     if nm[adress_hosta].has_tcp(389):
         if mode == "active":
             print("Port LDAP otwarty, uruchamiamy program XXX")
         if mode == "passive":
-            print("\nPort LDAP otwarty, możesz uruchomić poniższe programy:\n")
+            print("-"*40)
+            print("###Port LDAP otwarty, możesz uruchomić poniższe programy:###\n")
             print("nmap --script vuln -p 389 -v %s " % adress_hosta)
-            print("Pozyskujemy DN poniższmy poleceniem")
+            print("\n###Pozyskujemy DN poniższmy poleceniem###\n")
             print("ldapsearch -h %s -x -s base namingcontext" % adress_hosta)
-            print("Pozyskane DN wykorzystujemy poniżej. Przykładowe DN 'DC=htb,DC=local'")
+            print("\n###Pozyskane DN wykorzystujemy poniżej. Przykładowe DN 'DC=htb,DC=local'###\n")
             print("ldapsearch -h %s -x -b \"DC=htb,DC=local\"" % adress_hosta)
 
 def main(argv):
