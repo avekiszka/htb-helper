@@ -68,7 +68,7 @@ def serwisy(adress_hosta, mode):
         elif mode == "passive":
             print("Port SMB otwarty, możesz uruchomić poniższe programy:")
             print("nmap --script vuln -p 445 -v %s" % adress_hosta)
-            print("smbclinet -N -L \\\\\\\\%s\\\\" % adress_hosta)
+            print("smbclient -N -L \\\\\\\\%s\\\\" % adress_hosta)
             print("enum4linux %s" % adress_hosta)
     if nm[adress_hosta].has_tcp(80):
         if mode == "active":
