@@ -5,6 +5,7 @@ import sys, getopt
 
 def skaner(adres):
     #wczytanie nmapa do pamieci
+    global nm
     nm = nmap.PortScanner()
     #start scanu
     nm.scan(adres)
@@ -19,6 +20,11 @@ def skaner(adres):
             lport = nm[host][proto].keys()
             for port in lport:
                 print('port : %s\tstate : %s' % (port, nm[host][proto][port]['state']))
+
+
+def serwisy(adress):
+    if nm[adress].has_tcp(445):
+        print("Port SMB otwarty, uruchamiam program SMBCLIENT")
 
 
 def main(argv):
