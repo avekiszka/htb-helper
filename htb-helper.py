@@ -58,12 +58,32 @@ def skaner(adres_do_przeskanowania):
     print("#" * 10, "NMAP SCAN STOP", "#" * 10, sep="")
 
 
-def serwisy(adress_hosta):
+def serwisy(adress_hosta, mode):
     if nm[adress_hosta].has_tcp(445):
-        print("Port SMB otwarty, uruchamiam program SMBCLIENT")
-        run_smbclient(adress_hosta)
-        print("Port SMB otwarty, uruchamiam program ENUM4LINUX")
-        run_enum4linux(adress_hosta)
+        if mode == "active":
+            print("Port SMB otwarty, uruchamiam program SMBCLIENT")
+            run_smbclient(adress_hosta)
+            print("Port SMB otwarty, uruchamiam program ENUM4LINUX")
+            run_enum4linux(adress_hosta)
+        elif mode == "passive":
+            print("Port SMB otwarty, możesz uruchomić poniższe programy:")
+            print("smbclinet -N -L \\\\\\\\%s\\\\" % adress_hosta)
+            print("enum4linux %s" % adress_hosta)
+    if nm[adress_hosta].has_tcp(80):
+        if mode == "active":
+            print("Port HTTP otwarty, uruchamiam program XXX")
+        if mode == "passive":
+            print("Port HTTP otwarty, możesz uruchomić poniższe programy:")
+            print("Wyszkiwanie plikow i katalogow na serwerze www:\n","python3 /opt/dirsearch/dirsearch.py -u http://%s/ -f -e html,php,txt,xml -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt",sep="" % adress_hosta)
+            print("wfuzz -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://%s/FUZZ.php" % adress_hosta)
+            print("Analiza webserwera:")
+            print("nikto -host http://%s/" % adress_hosta)
+    if nm[adress_hosta].has_tcp(135):
+        if mode == "active":
+            print("Port RPC otwarty, uruchamiami program XXX")
+        if mode == "passive":
+            print("Port RPC otwarty, możesz uruchomić poniższe proogramy:")
+            print("rpcclient -U \"\" -N %s" % adress_hosta)
 
 
 def main(argv):
