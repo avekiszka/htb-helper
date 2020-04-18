@@ -1,16 +1,29 @@
-#import modulu
+# import modulu
 import nmap
 import sys, getopt
+import subprocess
 
+
+def run_ping(adress):
+    process = subprocess.Popen(['ping', '-c 4', adress],stdout=subprocess.PIPE,universal_newlines=True)
+    while True:
+        output = process.stdout.readline()
+        print(output.strip())
+        return_code = process.poll()
+        if return_code is not None:
+            print('Return Code', return_code)
+            for output in process.stdout.readlines():
+                print(output.strip())
+            break
 
 def skaner(adres):
-    #wczytanie nmapa do pamieci
+    # wczytanie nmapa do pamieci
     global nm
     nm = nmap.PortScanner()
-    #start scanu
+    # start scanu
     print("Uruchamiam NMAP skan")
     nm.scan(adres)
-    #wyswietlenie rezultatu
+    # wyswietlenie rezultatu
     for host in nm.all_hosts():
         print('-'*40)
         print('Host : %s (%s)' % (host, nm[host].hostname()))
@@ -41,6 +54,7 @@ def main(argv):
         elif opt in "-i":
             skaner(arg)
             serwisy(arg)
+
 
 if __name__ == "__main__":
     main(sys.argv[1:])
