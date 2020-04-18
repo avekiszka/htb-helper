@@ -4,17 +4,31 @@ import sys, getopt
 import subprocess
 
 
-def run_ping(adress):
-    process = subprocess.Popen(['ping', '-c 4', adress],stdout=subprocess.PIPE,universal_newlines=True)
+def read_subproc_lines(proc):
     while True:
-        output = process.stdout.readline()
+        output = proc.stdout.readline()
         print(output.strip())
-        return_code = process.poll()
+        return_code = proc.poll()
         if return_code is not None:
             print('Return Code', return_code)
-            for output in process.stdout.readlines():
+            for output in proc.stdout.readlines():
                 print(output.strip())
             break
+
+
+def run_ping(adress):
+    print("#"*10,"PING CHECK","#"*10,sep="")
+    process = subprocess.Popen(['ping', '-c 4', adress],stdout=subprocess.PIPE,universal_newlines=True)
+    read_subproc_lines(process)
+    print("#" * 10, "PING CHECK", "#" * 10, sep="")
+
+
+def run_smbclient(adress):
+    print("#" * 10, "SMBCLIENT", "#" * 10, sep="")
+    process = subprocess.Popen(['smbclient', '-N', '-L', '\\\\\\\\%s\\\\' % adress])
+    read_subproc_lines(process)
+    print("#" * 10, "SMBCLIENT", "#" * 10, sep="")
+
 
 def skaner(adres):
     # wczytanie nmapa do pamieci
