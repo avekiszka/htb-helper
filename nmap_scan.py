@@ -4,7 +4,7 @@ import sys, getopt
 import subprocess
 
 
-def read_subproc_lines(proc):
+def read_subproc_line(proc):
     while True:
         output = proc.stdout.readline()
         print(output.strip())
@@ -19,14 +19,14 @@ def read_subproc_lines(proc):
 def run_ping(adress):
     print("#"*10,"PING CHECK","#"*10,sep="")
     process = subprocess.Popen(['ping', '-c 4', adress],stdout=subprocess.PIPE,universal_newlines=True)
-    read_subproc_lines(process)
+    read_subproc_line(process)
     print("#" * 10, "PING CHECK", "#" * 10, sep="")
 
 
 def run_smbclient(adress):
     print("#" * 10, "SMBCLIENT", "#" * 10, sep="")
-    process = subprocess.Popen(['smbclient', '-N', '-L', '\\\\\\\\%s\\\\' % adress])
-    read_subproc_lines(process)
+    process = subprocess.Popen(['smbclient', '-N', '-L', '\\\\\\\\%s\\\\' % adress],stdout=subprocess.PIPE,universal_newlines=True)
+    read_subproc_line(process)
     print("#" * 10, "SMBCLIENT", "#" * 10, sep="")
 
 
@@ -53,6 +53,7 @@ def skaner(adres):
 def serwisy(adress):
     if nm[adress].has_tcp(445):
         print("Port SMB otwarty, uruchamiam program SMBCLIENT")
+        run_smbclient(adress)
 
 
 def main(argv):
