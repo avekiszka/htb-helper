@@ -47,7 +47,7 @@ def skaner(adres_do_przeskanowania):
     nm = nmap.PortScanner()
     # start scanu
     print("Uruchamiam NMAP skan")
-    nm.scan(adres_do_przeskanowania, arguments='-p- -Pn')
+    nm.scan(adres_do_przeskanowania, arguments='-T4 -p- -Pn')
     # wyswietlenie rezultatu
     for host in nm.all_hosts():
         print('-'*40)
@@ -174,8 +174,8 @@ def main(argv):
             
             Options:
             -h      Displays this help message
-            -a      Active mode. Runs commands for you, all you need to do is analyze the output.
-            -p      Passive mode. Shows you what command you can run, depending on the open port on the device.
+            -a      Active mode. Runs commands for you, all you need to do is analyze the output. ***ALPHA***
+            -p      Passive mode. Shows you what command you can run, depending on the open port on the device. ***BETA***
             
             Example Usage:
             python3 htb-helper.py -p 10.10.10.178
