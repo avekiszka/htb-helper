@@ -73,6 +73,8 @@ def serwisy(adress_hosta, mode):
             print_header("SMB")
             print("nmap --script vuln -p 445 -v %s" % adress_hosta)
             print("smbclient -N -L \\\\\\\\%s\\\\" % adress_hosta)
+            print("smbclinet -U "" //%s/<tu wpisz nazwe share drive>" % adress_hosta)
+            print("smbmap -H %s -u <nazwa uzytkownika> -p <haslo>" % adress_hosta)
             print("enum4linux %s" % adress_hosta)
     if nm[adress_hosta].has_tcp(80):
         if mode == "active":
