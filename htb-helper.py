@@ -47,7 +47,7 @@ def skaner(adres_do_przeskanowania):
     nm = nmap.PortScanner()
     # start scanu
     print("Uruchamiam NMAP skan")
-    nm.scan(adres_do_przeskanowania, arguments='-T4 -p- -Pn')
+    nm.scan(adres_do_przeskanowania, arguments='-T4 -Pn')
     # wyswietlenie rezultatu
     for host in nm.all_hosts():
         print('-'*40)
