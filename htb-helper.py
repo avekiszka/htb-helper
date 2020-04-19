@@ -180,7 +180,7 @@ def main(argv):
             Example Usage:
             python3 htb-helper.py -p 10.10.10.178
             
-            @avekiszka            
+            @avekiszka 2020           
             """)
             sys.exit(0)
         elif opt == "-a":
