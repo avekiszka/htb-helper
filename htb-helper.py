@@ -6,7 +6,7 @@ import subprocess
 
 def print_header(nazwa_uslugi):
     print("-" * 40)
-    print("###Port %s otwarty, możesz uruchomić poniższe programy:###" % nazwa_uslugi)
+    print("\n###\tPort %s otwarty, możesz uruchomić poniższe programy:\t###\n" % nazwa_uslugi)
 
 def read_subproc_line(proc):
     while True:
@@ -82,14 +82,14 @@ def serwisy(adress_hosta, mode):
         if mode == "passive":
             print_header("HTTP")
             print("nmap --script vuln -p 80 -v %s" % adress_hosta)
-            print("###Wyszkiwanie plikow i katalogow na serwerze www:###\n")
+            print("\n###\tWyszkiwanie plikow i katalogow na serwerze www:\t###\n")
             print("python3 /opt/dirsearch/dirsearch.py -u http://%s/ -f -e html,php,txt,xml -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt" % adress_hosta)
             print("wfuzz -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://%s/FUZZ.php" % adress_hosta)
             print("\n###Analiza webserwera:###\n")
             print("nikto -host http://%s/" % adress_hosta)
-            print("###Sprawdz czy istnieje plik robots.txt###")
-            print("###Sprawdz zrodlo strony###")
-            print("###Wykorzystaj Burpa###")
+            print("\n###\tSprawdz czy istnieje plik robots.txt\t###")
+            print("###\tSprawdz zrodlo strony\t###")
+            print("###\tWykorzystaj Burpa\t###")
     if nm[adress_hosta].has_tcp(8080):
         if mode == "active":
             print("Port HTTP otwarty, uruchamiam program XXX")
