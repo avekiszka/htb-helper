@@ -135,6 +135,13 @@ def serwisy(adress_hosta, mode):
             print("nmap --script vuln -p 53 -v %s" % adress_hosta)
             print("###Spróbuj zone transfer:###")
             print("dig AXFR <przykladowan nazwa domeny> @%s" % adress_hosta)
+    if nm[adress_hosta].has_udp(53):
+        if mode == "active":
+            print("not implemented")
+        elif mode == "passive":
+            print_header("SNMP")
+            print("### Spróbuj użyć public community string ###")
+            print("snmpwalk -v <version> -c <community string> %s" % adress_hosta)
 
 
 def main(argv):
