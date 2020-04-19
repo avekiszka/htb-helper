@@ -135,13 +135,28 @@ def serwisy(adress_hosta, mode):
             print("nmap --script vuln -p 53 -v %s" % adress_hosta)
             print("###Spróbuj zone transfer:###")
             print("dig AXFR <przykladowan nazwa domeny> @%s" % adress_hosta)
-    if nm[adress_hosta].has_udp(53):
+    if nm[adress_hosta].has_udp(161):
         if mode == "active":
             print("not implemented")
         elif mode == "passive":
             print_header("SNMP")
             print("### Spróbuj użyć public community string ###")
             print("snmpwalk -v <version> -c <community string> %s" % adress_hosta)
+    if nm[adress_hosta].has_tcp(3306):
+        if mode == "active":
+            print("not implemented")
+        elif mode == "passive":
+            print_header("MySQL")
+            print("nmap -A -n -p3306 %s" % adress_hosta)
+            print("nmap -A -n -PN --script:ALL -p3306 %s" % adress_hosta)
+            print("nmap --script vuln -p3306 -v %s" % adress_hosta)
+            print("mysql -h %s -u root" % adress_hosta)
+    if nm[adress_hosta].has_tcp(5985):
+        if mode == "active":
+            print("not implemented")
+        elif mode == "passive":
+            print_header("WinRM")
+            print("sudo ruby /opt/evil-winrm/evil-winrm.rb -i %s -u <nazwa uzytkownika>" % adress_hosta)
 
 
 def main(argv):
