@@ -4,6 +4,10 @@ import sys, getopt
 import subprocess
 
 
+def print_header(nazwa_uslugi):
+    print("-" * 40)
+    print("###Port %s otwarty, możesz uruchomić poniższe programy:###" % nazwa_uslugi)
+
 def read_subproc_line(proc):
     while True:
         output = proc.stdout.readline()
@@ -66,8 +70,7 @@ def serwisy(adress_hosta, mode):
             print("Port SMB otwarty, uruchamiam program ENUM4LINUX")
             run_enum4linux(adress_hosta)
         elif mode == "passive":
-            print("-" * 40)
-            print("Port SMB otwarty, możesz uruchomić poniższe programy:\n")
+            print_header("SMB")
             print("nmap --script vuln -p 445 -v %s" % adress_hosta)
             print("smbclient -N -L \\\\\\\\%s\\\\" % adress_hosta)
             print("enum4linux %s" % adress_hosta)
@@ -75,32 +78,62 @@ def serwisy(adress_hosta, mode):
         if mode == "active":
             print("Port HTTP otwarty, uruchamiam program XXX")
         if mode == "passive":
-            print("-" * 40)
-            print("###Port HTTP otwarty, możesz uruchomić poniższe programy:###\n")
+            print_header("HTTP")
             print("nmap --script vuln -p 80 -v %s" % adress_hosta)
             print("###Wyszkiwanie plikow i katalogow na serwerze www:###\n","python3 /opt/dirsearch/dirsearch.py -u http://%s/ -f -e html,php,txt,xml -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt",sep="" % adress_hosta)
             print("wfuzz -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://%s/FUZZ.php" % adress_hosta)
             print("\n###Analiza webserwera:###\n")
             print("nikto -host http://%s/" % adress_hosta)
+            print("###Sprawdz czy istnieje plik robots.txt###")
+            print("###Sprawdz zrodlo strony###")
+            print("###Wykorzystaj Burpa###")
+    if nm[adress_hosta].has_tcp(8080):
+        if mode == "active":
+            print("Port HTTP otwarty, uruchamiam program XXX")
+        if mode == "passive":
+            print_header("HTTP")
+            print("nmap --script vuln -p 80 -v %s" % adress_hosta)
+            print("###Wyszkiwanie plikow i katalogow na serwerze www:###\n","python3 /opt/dirsearch/dirsearch.py -u http://%s/ -f -e html,php,txt,xml -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt",sep="" % adress_hosta)
+            print("wfuzz -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://%s/FUZZ.php" % adress_hosta)
+            print("\n###Analiza webserwera:###\n")
+            print("nikto -host http://%s/" % adress_hosta)
+            print("###Sprawdz czy istnieje plik robots.txt###")
+            print("###Sprawdz zrodlo strony###")
+            print("###Wykorzystaj Burpa###")
     if nm[adress_hosta].has_tcp(135):
         if mode == "active":
             print("Port RPC otwarty, uruchamiamy program XXX")
         if mode == "passive":
-            print("-" * 40)
-            print("###Port RPC otwarty, możesz uruchomić poniższe programy:###\n")
+            print_header("RPC")
             print("nmap --script vuln -p 135 -v %s" % adress_hosta)
             print("rpcclient -U \"\" -N %s" % adress_hosta)
     if nm[adress_hosta].has_tcp(389):
         if mode == "active":
             print("Port LDAP otwarty, uruchamiamy program XXX")
         if mode == "passive":
-            print("-"*40)
-            print("###Port LDAP otwarty, możesz uruchomić poniższe programy:###\n")
+            print_header("LDAP")
             print("nmap --script vuln -p 389 -v %s " % adress_hosta)
             print("\n###Pozyskujemy DN poniższmy poleceniem###\n")
             print("ldapsearch -h %s -x -s base namingcontext" % adress_hosta)
             print("\n###Pozyskane DN wykorzystujemy poniżej. Przykładowe DN 'DC=htb,DC=local'###\n")
             print("ldapsearch -h %s -x -b \"DC=htb,DC=local\"" % adress_hosta)
+    if nm[adress_hosta].has_tcp(21):
+        if mode == "active":
+            print("Port FTP otwarty, uruchamiam program XXX")
+        elif mode == "passive":
+            print_header("FTP")
+            print("nmap --script vuln -p 21 -v %s" % adress_hosta)
+            print("Spróbuj anonymous login, jako nazwe uzytkownika uzyj 'anonymous', haslo puste albo cokolwiek")
+            print("ftp %s" % adress_hosta)
+    if nm[adress_hosta].has_tcp(53):
+        if mode == "active":
+            print("Not implemented")
+        elif mode == "passive":
+            print_header("DNS")
+            print("nmap --script vuln -p 53 -v %s" % adress_hosta)
+            print("###Spróbuj zone transfer:###")
+            print("dig AXFR <przykladowan nazwa domeny> @%s" % adress_hosta)
+
 
 def main(argv):
     try:
