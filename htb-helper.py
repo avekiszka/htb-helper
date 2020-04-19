@@ -163,7 +163,7 @@ def main(argv):
     try:
         opts, args = getopt.getopt(argv, "ha:p:")
     except getopt.GetoptError:
-        print('nmap_scan.py -i <ip address>')
+        print('htb-helper.py -h')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
