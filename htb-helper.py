@@ -12,7 +12,7 @@ def print_header(nazwa_uslugi):
 def read_subproc_line(proc):
     while True:
         output = proc.stdout.readline()
-        print(output.strip())
+        print(Back.BLACK, output.strip())
         return_code = proc.poll()
         if return_code is not None:
             print('Return Code', return_code)
