@@ -103,7 +103,7 @@ def serwisy(adress_hosta, mode):
         if mode == "passive":
             print_header("HTTP")
             print("nmap --script vuln -p 80 -v %s" % adress_hosta)
-            print("###Wyszkiwanie plikow i katalogow na serwerze www:###\n","python3 /opt/dirsearch/dirsearch.py -u http://%s/ -f -e html,php,txt,xml -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt",sep="" % adress_hosta)
+            print(f"###Wyszkiwanie plikow i katalogow na serwerze www:###\n",f"python3 /opt/dirsearch/dirsearch.py -u http://{adress_hosta}s/ -f -e html,php,txt,xml -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt", sep="")
             print("wfuzz -w /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt -u http://%s/FUZZ.php" % adress_hosta)
             print("\n###Analiza webserwera:###\n")
             print("nikto -host http://%s/" % adress_hosta)
